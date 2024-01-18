@@ -8,8 +8,6 @@ service = Service()
 option = webdriver.ChromeOptions()
 driver = webdriver.Chrome(service=service, options=option)
 
-books_list = ["Zēns, kuram patika brieži", "Dzeguzēns", "Uz paradīzi"]
-
 def janisroze_price(books):
     url = "https://www.janisroze.lv/lv/"
     driver.get(url)
@@ -30,13 +28,14 @@ def janisroze_price(books):
             price =  float(book_price[1::].replace(",", "."))
             books_price.append(price)
         except:
-            books_price.append(100)
+            books_price.append(1000)
         
     return books_price
 
 def eglobuss_price(books):
     url = "https://eglobuss.lv/"
     driver.get(url)
+    time.sleep(2)
     driver.implicitly_wait(1)
     cookie_butt = driver.find_element(By.CLASS_NAME, "cookieinfo-close")
     cookie_butt.click()
@@ -55,10 +54,29 @@ def eglobuss_price(books):
             price =  float(book_price[1::])
             books_price.append(price)
         except:
-            books_price.append(100)
+            books_price.append(1000)
         
     return books_price
 
+def valtersunrapa_price(books):
+    books_price = []
+
+    for book in books:
+        try:
+            url = f"https://www.valtersunrapa.lv/lv/search/?s={book}"
+            driver.get(url)
+            time.sleep(2)
+
+            book_price = driver.find_element(By.CLASS_NAME, "price").text
+            price = float(book_price[0:5].replace(",", "."))
+            books_price.append(price)
+        except:
+            books_price.append(1000)
+
+    return books_price
+
+books_list = ["Zēns, kuram patika brieži", "Dzeguzēns", "Uz paradīzi"]
 
 print(janisroze_price(books_list))
 print(eglobuss_price(books_list))
+print(valtersunrapa_price(books_list))
