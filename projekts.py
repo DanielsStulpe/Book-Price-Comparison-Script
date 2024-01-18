@@ -7,7 +7,7 @@ import time
 
 books_list = []
 
-with open("data.txt", "r", encoding="utf-8") as file:
+with open("Automatizācija - Projekts\data.txt", "r", encoding="utf-8") as file:
     lines = file.readlines()
     for line in lines:
         books_list.append(line.rstrip())
