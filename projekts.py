@@ -34,5 +34,31 @@ def janisroze_price(books):
         
     return books_price
 
+def eglobuss_price(books):
+    url = "https://eglobuss.lv/"
+    driver.get(url)
+    driver.implicitly_wait(1)
+    cookie_butt = driver.find_element(By.CLASS_NAME, "cookieinfo-close")
+    cookie_butt.click()
+    
+    books_price = []
+
+    for book in books:
+        search_input = driver.find_element(By.ID, "autocomplete-search")
+        search_input.clear()
+        search_input.send_keys(book)
+        input_butt = driver.find_element(By.CLASS_NAME, "header__actions-item")
+        input_butt.click()
+
+        try:
+            book_price = driver.find_element(By.CLASS_NAME, "single__price").text
+            price =  float(book_price[1::])
+            books_price.append(price)
+        except:
+            books_price.append(100)
+        
+    return books_price
+
 
 print(janisroze_price(books_list))
+print(eglobuss_price(books_list))
