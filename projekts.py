@@ -14,6 +14,8 @@ def janisroze_price(books):
     url = "https://www.janisroze.lv/lv/"
     driver.get(url)
     time.sleep(2)
+    
+    books_price = []
 
     for book in books:
         search_input = driver.find_element(By.ID, "search")
@@ -21,11 +23,16 @@ def janisroze_price(books):
         search_input.send_keys(book)
         input_butt = driver.find_element(By.CLASS_NAME, "button")
         input_butt.click()
-        time.sleep(2)
+        time.sleep(1.5)
 
-        book_price = driver.find_element(By.CLASS_NAME, "price").text
-        price =  float(book_price[1::].replace(",", "."))
-        print(price)
+        try:
+            book_price = driver.find_element(By.CLASS_NAME, "price").text
+            price =  float(book_price[1::].replace(",", "."))
+            books_price.append(price)
+        except:
+            books_price.append(100)
+        
+    return books_price
 
 
-janisroze_price(books_list)
+print(janisroze_price(books_list))
