@@ -4,6 +4,15 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import time
 
+
+books_list = []
+
+with open("data.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    for line in lines:
+        books_list.append(line.rstrip())
+file.close()
+
 service = Service()
 option = webdriver.ChromeOptions()
 driver = webdriver.Chrome(service=service, options=option)
@@ -75,8 +84,21 @@ def valtersunrapa_price(books):
 
     return books_price
 
-books_list = ["Zēns, kuram patika brieži", "Dzeguzēns", "Uz paradīzi"]
+price_1 = janisroze_price(books_list)
+price_2 = eglobuss_price(books_list)
+price_3 = valtersunrapa_price(books_list)
 
-print(janisroze_price(books_list))
-print(eglobuss_price(books_list))
-print(valtersunrapa_price(books_list))
+with open("result.txt", "w", encoding="utf-8") as file:
+    for i in range (0, len(books_list)):
+        file.write(str(i+1) + ". ")
+        if (price_1[i] == price_2[i] == price_3[i] == 1000):
+            file.write(books_list[i] + " - Nav pieejams visos veikalos\n")
+        elif (price_1[i] >= price_2[i] and price_1[i] >= price_3[i]):
+            file.write(books_list[i] + " - " + str(price_1[i]) + "€ - janisroze.lv\n")
+        elif (price_2[i] >= price_1[i] and price_2[i] >= price_3[i]):
+            file.write(books_list[i] + " - " + str(price_2[i]) + "€ - eglobuss.lv\n")
+        else:
+            file.write(books_list[i] + " - " + str(price_3[i]) + "€ - valtersunrapa.lv\n")
+file.close()
+
+driver.quit()
