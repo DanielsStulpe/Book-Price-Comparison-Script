@@ -23,3 +23,5 @@ s_book.click()
 
 book_price = driver.find_element(By.CLASS_NAME, "price").text
 print(book_price)
+
+input()
