@@ -24,7 +24,7 @@ driver = webdriver.Chrome(service=service, options=option)
 def janisroze_price(books):
     url = "https://www.janisroze.lv/lv/"
     driver.get(url)
-    time.sleep(2)
+    time.sleep(1.5)
     
     books_price = []
 
@@ -34,7 +34,7 @@ def janisroze_price(books):
         search_input.send_keys(book)
         input_butt = driver.find_element(By.CLASS_NAME, "button")
         input_butt.click()
-        time.sleep(1.5)
+        time.sleep(1)
 
         try:
             book_price = driver.find_element(By.CLASS_NAME, "price").text
@@ -49,7 +49,7 @@ def janisroze_price(books):
 def eglobuss_price(books):
     url = "https://eglobuss.lv/"
     driver.get(url)
-    time.sleep(2)
+    time.sleep(1.5)
     driver.implicitly_wait(1)
     cookie_butt = driver.find_element(By.CLASS_NAME, "cookieinfo-close")
     cookie_butt.click()
@@ -81,7 +81,7 @@ def valtersunrapa_price(books):
         try:
             url = f"https://www.valtersunrapa.lv/lv/search/?s={book}"
             driver.get(url)
-            time.sleep(2)
+            time.sleep(1.5)
 
             book_price = driver.find_element(By.CLASS_NAME, "price").text
             price = float(book_price[0:5].replace(",", "."))
